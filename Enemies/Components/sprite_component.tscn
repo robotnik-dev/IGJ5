@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://1e4ven6ltjsm"]
+
+[ext_resource type="Texture2D" uid="uid://bw20r45nnrcc" path="res://Assets/enemy1.png" id="1_b03mw"]
+[ext_resource type="Script" path="res://Enemies/Components/sprite_component.gd" id="2_6d3lw"]
+
+[node name="SpriteComponent" type="Sprite2D"]
+texture = ExtResource("1_b03mw")
+centered = false
+script = ExtResource("2_6d3lw")

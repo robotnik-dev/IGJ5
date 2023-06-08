@@ -17,5 +17,5 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
-		var damage_obj = Damage.new(damage, "Dark")
+		var damage_obj = Damage.new(damage, AlignmentComponent.Alignment.WHITE)
 		area.call_deferred("take_damage", damage_obj)

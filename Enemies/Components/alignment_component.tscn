@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://o64bh6sccfed"]
+
+[ext_resource type="Script" path="res://Enemies/Components/alignment_component.gd" id="1_hqndu"]
+
+[node name="AlignmentComponent" type="Node"]
+script = ExtResource("1_hqndu")

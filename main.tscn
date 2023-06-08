@@ -1,14 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bah8nbyesoypk"]
+[gd_scene load_steps=5 format=3 uid="uid://bah8nbyesoypk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
 [ext_resource type="PackedScene" uid="uid://cuistje55smtp" path="res://Spaceship/spaceship.tscn" id="2_i27qk"]
 [ext_resource type="PackedScene" uid="uid://dwg1n2u6gn4rq" path="res://Enemies/enemy.tscn" id="3_50qw8"]
 
+[sub_resource type="TileSet" id="TileSet_ayg5c"]
+tile_size = Vector2i(8, 8)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_fgtoa")
 
 [node name="Spaceship" parent="." instance=ExtResource("2_i27qk")]
-position = Vector2(627, 309)
+position = Vector2(158, 167)
 
 [node name="Enemy" parent="." instance=ExtResource("3_50qw8")]
-position = Vector2(266, 55)
+position = Vector2(88, 18)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_ayg5c")
+format = 2

@@ -1,9 +1,14 @@
 extends Resource
 class_name Damage
 
-var amount: float
-var type: StringName
+enum Alignment {
+	WHITE,
+	DARK
+}
 
-func _init(_amount: float, _type: StringName) -> void:
+var amount: float
+var alignment: int
+
+func _init(_amount: float, _alignment: int) -> void:
 	amount = _amount
-	type = _type
+	alignment = _alignment

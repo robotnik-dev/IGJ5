@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dydsp05ue5wf"]
+
+[ext_resource type="Script" path="res://Enemies/Components/healthbar_component.gd" id="1_avaqk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5xogr"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hku0l"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="HealthbarComponent" type="ProgressBar"]
+offset_top = 32.0
+offset_right = 321.0
+offset_bottom = 62.0
+rotation = -1.5708
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_5xogr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hku0l")
+value = 50.0
+show_percentage = false
+script = ExtResource("1_avaqk")

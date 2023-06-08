@@ -1,55 +1,44 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuistje55smtp"]
+[gd_scene load_steps=8 format=3 uid="uid://cuistje55smtp"]
 
 [ext_resource type="Script" path="res://Spaceship/spaceship.gd" id="1_gon3a"]
-[ext_resource type="Texture2D" uid="uid://dvpecw50kvdmy" path="res://icon.svg" id="2_buxtu"]
 [ext_resource type="Script" path="res://Spaceship/Guns/guns.gd" id="3_7hs2e"]
 [ext_resource type="PackedScene" uid="uid://dnvqdwlv3jf1g" path="res://Spaceship/Guns/gun.tscn" id="4_k3jt7"]
 [ext_resource type="PackedScene" uid="uid://dkb3gv056rcjw" path="res://Spaceship/Guns/Bullets/bullet.tscn" id="5_4cjig"]
+[ext_resource type="Texture2D" uid="uid://6wehb8176wlx" path="res://Assets/gun1.png" id="5_8rx3q"]
+[ext_resource type="Texture2D" uid="uid://bmmpcq5p8g3pd" path="res://Assets/spaceship.png" id="5_os7uh"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fsgrc"]
-radius = 16.0
-height = 52.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cr3np"]
+size = Vector2(20, 26)
 
 [node name="Spaceship" type="CharacterBody2D" node_paths=PackedStringArray("guns")]
 script = ExtResource("1_gon3a")
 guns = NodePath("Guns")
 
-[node name="Hull" type="Node2D" parent="."]
-
-[node name="Sprite2D2" type="Sprite2D" parent="Hull"]
-position = Vector2(-16, 8)
-scale = Vector2(0.203125, 0.375)
-texture = ExtResource("2_buxtu")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Hull"]
-position = Vector2(16, 8)
-scale = Vector2(0.203125, 0.375)
-texture = ExtResource("2_buxtu")
-
-[node name="Sprite2D" type="Sprite2D" parent="Hull"]
-position = Vector2(0, -25.5)
-scale = Vector2(0.273438, 0.476563)
-texture = ExtResource("2_buxtu")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_fsgrc")
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_cr3np")
 
 [node name="Guns" type="Node2D" parent="."]
 script = ExtResource("3_7hs2e")
 
 [node name="Gun" parent="Guns" instance=ExtResource("4_k3jt7")]
-position = Vector2(-56, 0)
+position = Vector2(-16, 0)
 bullet_scene = ExtResource("5_4cjig")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" parent="Guns/Gun" index="0"]
-scale = Vector2(0.125, 0.40625)
+texture = ExtResource("5_8rx3q")
 
 [node name="Gun2" parent="Guns" instance=ExtResource("4_k3jt7")]
-position = Vector2(56, 0)
+position = Vector2(16, 0)
 bullet_scene = ExtResource("5_4cjig")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" parent="Guns/Gun2" index="0"]
-scale = Vector2(0.125, 0.40625)
+texture = ExtResource("5_8rx3q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_os7uh")
 
 [editable path="Guns/Gun"]
 [editable path="Guns/Gun2"]
