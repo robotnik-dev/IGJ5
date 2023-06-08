@@ -1,35 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2mm1fydk1d6a"]
+[gd_scene load_steps=7 format=3 uid="uid://cuistje55smtp"]
 
 [ext_resource type="Script" path="res://Spaceship/spaceship.gd" id="1_gon3a"]
 [ext_resource type="Texture2D" uid="uid://dvpecw50kvdmy" path="res://icon.svg" id="2_buxtu"]
+[ext_resource type="Script" path="res://Spaceship/Guns/guns.gd" id="3_7hs2e"]
+[ext_resource type="PackedScene" uid="uid://dnvqdwlv3jf1g" path="res://Spaceship/Guns/gun.tscn" id="4_k3jt7"]
+[ext_resource type="PackedScene" uid="uid://dkb3gv056rcjw" path="res://Spaceship/Guns/Bullets/bullet.tscn" id="5_4cjig"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fsgrc"]
-radius = 64.0
-height = 160.0
+radius = 16.0
+height = 52.0
 
-[node name="Spaceship" type="CharacterBody2D"]
+[node name="Spaceship" type="CharacterBody2D" node_paths=PackedStringArray("guns")]
 script = ExtResource("1_gon3a")
+guns = NodePath("Guns")
 
 [node name="Hull" type="Node2D" parent="."]
 
 [node name="Sprite2D2" type="Sprite2D" parent="Hull"]
-position = Vector2(-38, 37)
-scale = Vector2(0.421875, 1)
+position = Vector2(-16, 8)
+scale = Vector2(0.203125, 0.375)
 texture = ExtResource("2_buxtu")
 
 [node name="Sprite2D3" type="Sprite2D" parent="Hull"]
-position = Vector2(38, 37)
-scale = Vector2(0.421875, 1)
+position = Vector2(16, 8)
+scale = Vector2(0.203125, 0.375)
 texture = ExtResource("2_buxtu")
 
 [node name="Sprite2D" type="Sprite2D" parent="Hull"]
-position = Vector2(-1, -35)
-scale = Vector2(0.421875, 1)
+position = Vector2(0, -25.5)
+scale = Vector2(0.273438, 0.476563)
 texture = ExtResource("2_buxtu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 22)
 shape = SubResource("CapsuleShape2D_fsgrc")
 
-[node name="GunPivot" type="Node2D" parent="."]
-position = Vector2(0, -24)
+[node name="Guns" type="Node2D" parent="."]
+script = ExtResource("3_7hs2e")
+
+[node name="Gun" parent="Guns" instance=ExtResource("4_k3jt7")]
+position = Vector2(-56, 0)
+bullet_scene = ExtResource("5_4cjig")
+
+[node name="Sprite2D" parent="Guns/Gun" index="0"]
+scale = Vector2(0.125, 0.40625)
+
+[node name="Gun2" parent="Guns" instance=ExtResource("4_k3jt7")]
+position = Vector2(56, 0)
+bullet_scene = ExtResource("5_4cjig")
+
+[node name="Sprite2D" parent="Guns/Gun2" index="0"]
+scale = Vector2(0.125, 0.40625)
+
+[editable path="Guns/Gun"]
+[editable path="Guns/Gun2"]

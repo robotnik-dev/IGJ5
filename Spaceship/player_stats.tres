@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpaceshipStats" load_steps=2 format=3 uid="uid://rpb80ma00xk0"]
+
+[ext_resource type="Script" path="res://Spaceship/spaceship_stats.gd" id="1_thepj"]
+
+[resource]
+script = ExtResource("1_thepj")
+speed = 500.0
+decceleration = 15
+acceleration = 40
+attack_speed = 10.0

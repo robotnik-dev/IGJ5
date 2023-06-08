@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bah8nbyesoypk"]
+[gd_scene load_steps=4 format=3 uid="uid://bah8nbyesoypk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
-[ext_resource type="PackedScene" uid="uid://c2mm1fydk1d6a" path="res://Spaceship/spaceship.tscn" id="2_i27qk"]
+[ext_resource type="PackedScene" uid="uid://cuistje55smtp" path="res://Spaceship/spaceship.tscn" id="2_i27qk"]
+[ext_resource type="PackedScene" uid="uid://dwg1n2u6gn4rq" path="res://Enemies/enemy.tscn" id="3_50qw8"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_fgtoa")
@@ -10,3 +11,6 @@ script = ExtResource("1_fgtoa")
 position = Vector2(627, 309)
 decceleration = 30
 acceleration = 50
+
+[node name="Enemy" parent="." instance=ExtResource("3_50qw8")]
+position = Vector2(266, 55)
