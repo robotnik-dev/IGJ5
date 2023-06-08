@@ -10,5 +10,8 @@ enum Alignment {
 @export var alignment: Alignment:
 	set(value):
 		alignment = value
-		sprite_component.change_alignment(alignment)
+		if sprite_component:
+			sprite_component.change_alignment(alignment)
 
+func _ready() -> void:
+	self.alignment = alignment

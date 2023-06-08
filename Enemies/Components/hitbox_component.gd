@@ -1,14 +1,10 @@
 extends Area2D
 class_name HitboxComponent
 
-@export var health_component: HealthComponent
-@export var alignment_component: AlignmentComponent
+func _ready() -> void:
+	area_entered.connect(_on_area_entered)
 
-func take_damage(damage: Damage) -> void:
-	if is_same_alignment(damage.alignment):
-		health_component.damage(damage.amount)
-
-func is_same_alignment(alignment) -> bool:
-	var same = false
-	same = AlignmentComponent.Alignment.keys()[alignment] == AlignmentComponent.Alignment.keys()[alignment_component.alignment]
-	return same
+func _on_area_entered(area: Area2D) -> void:
+	if area.has_method("take_damage"):
+		var damage_obj = Damage.new(owner.damage, owner.alignment)
+		area.call_deferred("take_damage", damage_obj)

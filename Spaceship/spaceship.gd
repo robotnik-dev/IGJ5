@@ -1,7 +1,8 @@
-extends CharacterBody2D
+extends Node2D
 class_name Spaceship
 
 @export var guns: Node2D
+@export var sprite_component: SpriteComponent
 
 var attack_timer: Timer
 var move_timer: Timer
@@ -28,8 +29,8 @@ func _set_move_timer() -> void:
 	add_child(move_timer)
 	move_timer.start()
 
-	var start_pos = Tilemap.local_to_map(global_position)
-	global_position = Tilemap.map_to_local(start_pos)
+	var start_pos = Playfield.local_to_map(global_position)
+	global_position = Playfield.map_to_local(start_pos)
 	current_map_pos = start_pos
 
 func _physics_process(delta: float) -> void:
@@ -41,9 +42,18 @@ func _physics_process(delta: float) -> void:
 			move_to(current_map_pos + direction)
 
 func move_to(map_pos: Vector2i) -> void:
-	global_position = Tilemap.map_to_local(map_pos)
-	current_map_pos = Tilemap.local_to_map(global_position)
+	var next_pos: Vector2i = map_pos
+	if next_pos.x >= Playfield.oob_right or next_pos.x <= Playfield.oob_left:
+		next_pos.x = current_map_pos.x
+	
+	if next_pos.y >= Playfield.oob_bottom or next_pos.y <= Playfield.oob_top:
+		next_pos.y = current_map_pos.y
+	
+	global_position = Playfield.map_to_local(next_pos)
+	current_map_pos = Playfield.local_to_map(global_position)
 
+func change_alignment(alignment: AlignmentComponent.Alignment) -> void:
+	sprite_component.change_alignment(alignment)
 
 func get_input_direction() -> Vector2i:
 	return Vector2i(

@@ -1,16 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwg1n2u6gn4rq"]
+[gd_scene load_steps=12 format=3 uid="uid://77reewsp03c"]
 
 [ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_uo0qm"]
 [ext_resource type="PackedScene" uid="uid://1e4ven6ltjsm" path="res://Enemies/Components/sprite_component.tscn" id="2_vv16e"]
 [ext_resource type="PackedScene" uid="uid://ub03ex6vfg63" path="res://Enemies/Components/health_component.tscn" id="3_pairp"]
-[ext_resource type="PackedScene" uid="uid://celgduc7sv1o4" path="res://Enemies/Components/hitbox_component.tscn" id="4_67ukf"]
+[ext_resource type="PackedScene" uid="uid://b6u4comog8jhy" path="res://Enemies/Components/hurtbox_component.tscn" id="4_67ukf"]
 [ext_resource type="PackedScene" uid="uid://o64bh6sccfed" path="res://Enemies/Components/alignment_component.tscn" id="5_l1err"]
 [ext_resource type="PackedScene" uid="uid://bsnj2h2xs78sc" path="res://Enemies/Components/deatheffect_component.tscn" id="7_7qu7d"]
 [ext_resource type="Script" path="res://Enemies/Components/deatheffect_component.gd" id="8_27fom"]
 [ext_resource type="PackedScene" uid="uid://dydsp05ue5wf" path="res://Enemies/Components/healthbar_component.tscn" id="9_g6jrb"]
+[ext_resource type="PackedScene" uid="uid://dumwt2tieys26" path="res://Enemies/Components/hitbox_component.tscn" id="9_varpt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4uvr"]
 size = Vector2(28, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6odl"]
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_uo0qm")
@@ -20,13 +23,13 @@ script = ExtResource("1_uo0qm")
 [node name="HealthComponent" parent="." instance=ExtResource("3_pairp")]
 max_health = 5
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component", "alignment_component") instance=ExtResource("4_67ukf")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component", "alignment_component") instance=ExtResource("4_67ukf")]
 collision_layer = 4
-collision_mask = 2
+monitoring = false
 health_component = NodePath("../HealthComponent")
 alignment_component = NodePath("../AlignmentComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 position = Vector2(14, 16)
 shape = SubResource("RectangleShape2D_d4uvr")
 
@@ -39,3 +42,12 @@ health_component = NodePath("../HealthComponent")
 
 [node name="HealthbarComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_g6jrb")]
 health_component = NodePath("../HealthComponent")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("9_varpt")]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(14, 16)
+shape = SubResource("RectangleShape2D_o6odl")
