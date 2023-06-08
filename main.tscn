@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bah8nbyesoypk"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
+[ext_resource type="PackedScene" uid="uid://c2mm1fydk1d6a" path="res://Spaceship/spaceship.tscn" id="2_i27qk"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_fgtoa")
+
+[node name="Spaceship" parent="." instance=ExtResource("2_i27qk")]
+position = Vector2(627, 309)
+decceleration = 30
+acceleration = 50

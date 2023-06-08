@@ -1,0 +1,15 @@
+1. spaceship
+- move speed
+- decceleration
+- acceleration
+
+
+2. Guns:
+- number of shots simultanously
+	- arc of shots
+	
+- size of bullets
+- attack speed
+- damage
+	- type: "black"
+	- type: "white"

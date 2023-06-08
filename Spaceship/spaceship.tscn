@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2mm1fydk1d6a"]
+
+[ext_resource type="Script" path="res://Spaceship/spaceship.gd" id="1_gon3a"]
+[ext_resource type="Texture2D" uid="uid://dvpecw50kvdmy" path="res://icon.svg" id="2_buxtu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fsgrc"]
+radius = 64.0
+height = 160.0
+
+[node name="Spaceship" type="CharacterBody2D"]
+script = ExtResource("1_gon3a")
+
+[node name="Hull" type="Node2D" parent="."]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Hull"]
+position = Vector2(-38, 37)
+scale = Vector2(0.421875, 1)
+texture = ExtResource("2_buxtu")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Hull"]
+position = Vector2(38, 37)
+scale = Vector2(0.421875, 1)
+texture = ExtResource("2_buxtu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Hull"]
+position = Vector2(-1, -35)
+scale = Vector2(0.421875, 1)
+texture = ExtResource("2_buxtu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 22)
+shape = SubResource("CapsuleShape2D_fsgrc")
+
+[node name="GunPivot" type="Node2D" parent="."]
+position = Vector2(0, -24)
