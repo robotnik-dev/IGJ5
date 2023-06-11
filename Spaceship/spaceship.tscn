@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://2jn447s17shs"]
+[gd_scene load_steps=13 format=3 uid="uid://2jn447s17shs"]
 
 [ext_resource type="Script" path="res://Spaceship/spaceship.gd" id="1_gon3a"]
 [ext_resource type="Script" path="res://Spaceship/Guns/guns.gd" id="3_7hs2e"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://ub03ex6vfg63" path="res://Enemies/Components/health_component.tscn" id="7_3wtlu"]
 [ext_resource type="PackedScene" uid="uid://b6u4comog8jhy" path="res://Enemies/Components/hurtbox_component.tscn" id="8_mdvw4"]
 [ext_resource type="PackedScene" uid="uid://o64bh6sccfed" path="res://Enemies/Components/alignment_component.tscn" id="9_qhmtc"]
+[ext_resource type="Script" path="res://Spaceship/hearts.gd" id="10_6777j"]
+[ext_resource type="Texture2D" uid="uid://dtkc5ewrm6c7l" path="res://Assets/Heart-full.png" id="10_fbvb4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0urq"]
 size = Vector2(48, 20)
@@ -54,6 +56,33 @@ alignment_component = NodePath("../AlignmentComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_p0urq")
+
+[node name="Hearts" type="HBoxContainer" parent="." node_paths=PackedStringArray("health_component")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_6777j")
+health_component = NodePath("../HealthComponent")
+
+[node name="TextureRect" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("10_fbvb4")
+
+[node name="TextureRect2" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("10_fbvb4")
+
+[node name="TextureRect3" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+texture = ExtResource("10_fbvb4")
 
 [editable path="Guns/Gun"]
 [editable path="Guns/Gun2"]

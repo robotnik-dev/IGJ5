@@ -81,5 +81,21 @@ autostart = true
 [node name="MoveTimer" type="Timer" parent="EnemyManager"]
 autostart = true
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="EnemyManager/MoveTimer" to="EnemyManager" method="_on_move_timer_timeout"]

@@ -2,10 +2,16 @@ extends Node
 class_name HealthComponent
 
 signal health_depleted
+signal health_changed(health)
 
 @export var max_health: int = 100
 
-var health: int
+# cooldown for damage?
+
+var health: int:
+	set(amount):
+		health = amount
+		health_changed.emit(health)
 
 func _ready() -> void:
 	to_full_health()
