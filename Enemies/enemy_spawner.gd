@@ -4,6 +4,12 @@ var enemy_scene: PackedScene = preload("res://Enemies/enemy.tscn")
 
 @onready var spawn_line: PathFollow2D = $Path2D/SpawnLine
 
+
+func new_game() -> void:
+	for child in get_children():
+		if child is Enemy:
+			child.queue_free()
+
 # ratio between 0 and 1
 func spawn_enemy_at_ratio(ratio: float) -> void:
 	var enemy = enemy_scene.instantiate()
@@ -23,6 +29,8 @@ func move_all_enemies_down() -> void:
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy_at_ratio(randf())
 
-
 func _on_move_timer_timeout() -> void:
 	move_all_enemies_down()
+
+func _on_despawn_area_area_exited(area: Area2D) -> void:
+	area.owner.queue_free()

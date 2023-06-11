@@ -16,9 +16,8 @@ texture = ExtResource("3_gnxg7")
 centered = true
 
 [node name="HitboxComponent" parent="." instance=ExtResource("4_photh")]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 4
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("RectangleShape2D_mrpif")

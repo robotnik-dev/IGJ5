@@ -3,6 +3,16 @@ class_name Spaceship
 
 @export var guns: Node2D
 @export var sprite_component: SpriteComponent
+@export var alignment_component: AlignmentComponent
+@onready var gun: Gun = $Guns/Gun
+@onready var gun_2: Gun = $Guns/Gun2
+
+var alignment: AlignmentComponent.Alignment:
+	get:
+		return alignment_component.alignment
+	set(value):
+		alignment = value
+		alignment_component.alignment = alignment
 
 var attack_timer: Timer
 var move_timer: Timer
@@ -41,15 +51,19 @@ func _physics_process(delta: float) -> void:
 			move_timer.start()
 			Playfield.move_spaceship_to(current_map_pos + direction, self)
 
-
-func change_alignment(alignment: AlignmentComponent.Alignment) -> void:
-	sprite_component.change_alignment(alignment)
-
 func get_input_direction() -> Vector2i:
 	return Vector2i(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	)
+
+func change_bullet_alignment() -> void:
+	for child in guns.get_children():
+		match child.bullet_alignment:
+			AlignmentComponent.Alignment.WHITE:
+				child.bullet_alignment = AlignmentComponent.Alignment.BLACK
+			AlignmentComponent.Alignment.BLACK:
+				child.bullet_alignment = AlignmentComponent.Alignment.WHITE
 
 func shoot() -> void:
 	if guns.has_method("shoot"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://77reewsp03c"]
+[gd_scene load_steps=11 format=3 uid="uid://77reewsp03c"]
 
 [ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_uo0qm"]
 [ext_resource type="PackedScene" uid="uid://1e4ven6ltjsm" path="res://Enemies/Components/sprite_component.tscn" id="2_vv16e"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://b6u4comog8jhy" path="res://Enemies/Components/hurtbox_component.tscn" id="4_67ukf"]
 [ext_resource type="PackedScene" uid="uid://o64bh6sccfed" path="res://Enemies/Components/alignment_component.tscn" id="5_l1err"]
 [ext_resource type="PackedScene" uid="uid://bsnj2h2xs78sc" path="res://Enemies/Components/deatheffect_component.tscn" id="7_7qu7d"]
-[ext_resource type="Script" path="res://Enemies/Components/deatheffect_component.gd" id="8_27fom"]
 [ext_resource type="PackedScene" uid="uid://dydsp05ue5wf" path="res://Enemies/Components/healthbar_component.tscn" id="9_g6jrb"]
 [ext_resource type="PackedScene" uid="uid://dumwt2tieys26" path="res://Enemies/Components/hitbox_component.tscn" id="9_varpt"]
 
@@ -37,7 +36,6 @@ shape = SubResource("RectangleShape2D_d4uvr")
 sprite_component = NodePath("../SpriteComponent")
 
 [node name="DeatheffectComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_7qu7d")]
-script = ExtResource("8_27fom")
 health_component = NodePath("../HealthComponent")
 
 [node name="HealthbarComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_g6jrb")]

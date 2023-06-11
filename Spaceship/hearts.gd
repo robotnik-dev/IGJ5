@@ -9,10 +9,17 @@ func _ready() -> void:
 	health_component.health_changed.connect(set_lifes)
 
 func set_lifes(amount: int) -> void:
-	print(amount)
-	var i = 0
-	for texture in get_children():
-		if i == amount:
-			break
-		texture = texture as TextureRect
-		texture.texture = empty_heart
+	match amount:
+		0:
+			for child in get_children():
+				child.texture = empty_heart
+		1:
+			get_child(0).texture = empty_heart
+			get_child(1).texture = empty_heart
+		2:
+			get_child(0).texture = empty_heart
+		3:
+			for child in get_children():
+				child.texture = full_heart
+		_:
+			pass

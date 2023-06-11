@@ -36,6 +36,8 @@ func init(
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	top_level = true
+	sprite_component.change_alignment(alignment)
+
 
 func _physics_process(delta: float) -> void:
 	global_position.y -= speed * delta

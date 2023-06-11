@@ -8,3 +8,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
 		var damage_obj = Damage.new(owner.damage, owner.alignment)
 		area.call_deferred("take_damage", damage_obj)
+		if owner is Bullet:
+			if not area.is_same_alignment(owner.alignment):
+				owner.queue_free()

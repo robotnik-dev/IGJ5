@@ -3,13 +3,16 @@ class_name Enemy
 
 @export var damage: int = 1
 
-@onready var alignment_component: Node = $AlignmentComponent
+@onready var alignment_component: AlignmentComponent = $AlignmentComponent
 
 var current_map_pos: Vector2i
 
 var alignment: AlignmentComponent.Alignment:
 	get:
 		return alignment_component.alignment
+	set(value):
+		alignment = value
+		alignment_component.alignment = alignment
 
 
 func _ready() -> void:

@@ -7,7 +7,7 @@ enum Alignment {
 }
 
 @export var sprite_component: SpriteComponent
-@export var alignment: Alignment:
+var alignment: Alignment:
 	set(value):
 		alignment = value
 		if sprite_component:
