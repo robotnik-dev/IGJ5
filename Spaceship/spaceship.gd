@@ -39,18 +39,8 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		if move_timer.time_left == 0:
 			move_timer.start()
-			move_to(current_map_pos + direction)
+			Playfield.move_spaceship_to(current_map_pos + direction, self)
 
-func move_to(map_pos: Vector2i) -> void:
-	var next_pos: Vector2i = map_pos
-	if next_pos.x >= Playfield.oob_right or next_pos.x <= Playfield.oob_left:
-		next_pos.x = current_map_pos.x
-	
-	if next_pos.y >= Playfield.oob_bottom or next_pos.y <= Playfield.oob_top:
-		next_pos.y = current_map_pos.y
-	
-	global_position = Playfield.map_to_local(next_pos)
-	current_map_pos = Playfield.local_to_map(global_position)
 
 func change_alignment(alignment: AlignmentComponent.Alignment) -> void:
 	sprite_component.change_alignment(alignment)
