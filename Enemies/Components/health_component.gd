@@ -26,6 +26,10 @@ func damage(amount: int) -> void:
 	if owner is Spaceship:
 		if damage_cooldown_timer.is_stopped():
 			damage_cooldown_timer.start()
+			var audio = AudioStreamPlayer.new()
+			audio.stream = load("res://Assets/Sounds/hurt2.wav")
+			add_child(audio)
+			audio.play()
 			health -= amount
 			if health <= 0:
 				health_depleted.emit()

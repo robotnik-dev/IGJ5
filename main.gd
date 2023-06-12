@@ -14,6 +14,8 @@ var spaceShip = preload("res://Spaceship/spaceship.tscn")
 @onready var animation_player: AnimationPlayer = $UI/HUD/HBoxContainer/AnimationPlayer
 @onready var start: Button = $UI/TitleScreen/MarginContainer/VBoxContainer/Start
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var audio_stream_player_2: AudioStreamPlayer = $AudioStreamPlayer2
+@onready var new_game_btn: Button = $UI/Gameover/CenterContainer/VBoxContainer/NewGame
 
 var spaceship: Spaceship
 
@@ -24,6 +26,8 @@ func game_over() -> void:
 	pickup_spawner.game_over()
 	gameover.show()
 	animation_player.stop()
+	audio_stream_player_2.play()
+	new_game_btn.grab_focus()
 
 func new_game() -> void:
 	PlayerStats.score = 0
@@ -40,11 +44,14 @@ func new_game() -> void:
 	help.can_toggle = true
 	
 	animation_player.play("switch_color")
+	
+	new_game_set.emit()
 
 func switch_color() -> void:
 	spaceship.change_ship_alignment()
 
 func _on_new_game_pressed() -> void:
+	audio_stream_player.play()	
 	new_game()
 
 func _on_start_pressed() -> void:

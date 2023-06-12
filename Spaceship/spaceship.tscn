@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://2jn447s17shs"]
+[gd_scene load_steps=16 format=3 uid="uid://2jn447s17shs"]
 
 [ext_resource type="Script" path="res://Spaceship/spaceship.gd" id="1_gon3a"]
 [ext_resource type="Script" path="res://Spaceship/Guns/guns.gd" id="3_7hs2e"]
@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://o64bh6sccfed" path="res://Enemies/Components/alignment_component.tscn" id="9_qhmtc"]
 [ext_resource type="Script" path="res://Spaceship/hearts.gd" id="10_6777j"]
 [ext_resource type="Texture2D" uid="uid://dtkc5ewrm6c7l" path="res://Assets/Heart-full.png" id="10_fbvb4"]
+[ext_resource type="AudioStream" uid="uid://dn6x5lybi08bc" path="res://Assets/Sounds/hurt3.wav" id="10_vmm6m"]
 [ext_resource type="PackedScene" uid="uid://bsnj2h2xs78sc" path="res://Enemies/Components/deatheffect_component.tscn" id="12_vgwuq"]
+[ext_resource type="AudioStream" uid="uid://dgf6n3i6ali4i" path="res://Assets/Sounds/shoot3.wav" id="13_akamh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0urq"]
 size = Vector2(24, 28)
@@ -50,6 +52,9 @@ texture = ExtResource("5_os7uh")
 
 [node name="HealthComponent" parent="." instance=ExtResource("7_3wtlu")]
 max_health = 3
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HealthComponent"]
+stream = ExtResource("10_vmm6m")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component", "alignment_component") instance=ExtResource("8_mdvw4")]
 position = Vector2(16, 16)
@@ -91,6 +96,10 @@ texture = ExtResource("10_fbvb4")
 
 [node name="DeatheffectComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("12_vgwuq")]
 health_component = NodePath("../HealthComponent")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_akamh")
+volume_db = -12.0
 
 [editable path="Guns/Gun"]
 [editable path="Guns/Gun2"]

@@ -6,6 +6,7 @@ class_name Spaceship
 @export var alignment_component: AlignmentComponent
 @onready var gun: Gun = $Guns/Gun
 @onready var gun_2: Gun = $Guns/Gun2
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var alignment: AlignmentComponent.Alignment:
 	set(value):
@@ -21,8 +22,12 @@ var move_speed_scale: float = 5.0
 func _ready() -> void:
 	_set_attack_timer()
 	_set_move_timer()
+	
+	PlayerStats.attack_speed_changed.connect(_set_attack_timer)
 
 func _set_attack_timer() -> void:
+	if attack_timer:
+		remove_child(attack_timer)
 	attack_timer = Timer.new()
 	attack_timer.wait_time = 1.0 / PlayerStats.attack_speed
 	attack_timer.one_shot = false
@@ -73,4 +78,5 @@ func change_bullet_alignment() -> void:
 func shoot() -> void:
 	if guns.has_method("shoot"):
 		guns.shoot()
+		audio_stream_player_2d.play()
 

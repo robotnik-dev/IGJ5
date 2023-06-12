@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bah8nbyesoypk"]
+[gd_scene load_steps=30 format=3 uid="uid://bah8nbyesoypk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
 [ext_resource type="Texture2D" uid="uid://cxxumvsyhrxq2" path="res://Assets/background.png" id="2_jtqpq"]
@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://d3m3pq70u241y" path="res://Assets/bad.png" id="6_m2mrk"]
 [ext_resource type="Script" path="res://Pickup/pickup_spawner.gd" id="6_wdgpe"]
 [ext_resource type="Texture2D" uid="uid://bfjmkkf4nem6d" path="res://Assets/change-color.png" id="8_ignrr"]
-[ext_resource type="AudioStream" uid="uid://djwd3osi8tcw" path="res://Assets/Sounds/Bleep_01.wav" id="11_ebls7"]
+[ext_resource type="AudioStream" uid="uid://wse5tgyuurgf" path="res://Assets/Sounds/select1.wav" id="11_d5hyf"]
+[ext_resource type="AudioStream" uid="uid://b6whv4tot07f1" path="res://Assets/Sounds/powerup1.wav" id="12_ifjxx"]
+[ext_resource type="AudioStream" uid="uid://b3ulm4sss8qgj" path="res://Assets/Sounds/bgm_2.mp3" id="13_w7y7q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfkwr"]
 texture = ExtResource("2_jtqpq")
@@ -83,7 +85,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_fima5"]
 resource_name = "switch_color"
-length = 10.0
+length = 5.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -92,7 +94,7 @@ tracks/0/path = NodePath("ProgressBar:value")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 10),
+"times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 100.0]
@@ -104,7 +106,7 @@ tracks/1/path = NodePath("../../..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(10),
+"times": PackedFloat32Array(5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -412,7 +414,7 @@ shape = SubResource("RectangleShape2D_pbmon")
 script = ExtResource("6_wdgpe")
 
 [node name="PickupTimer" type="Timer" parent="PickupSpawner"]
-wait_time = 10.0
+wait_time = 7.0
 
 [node name="Path2D" type="Path2D" parent="PickupSpawner"]
 curve = SubResource("Curve2D_yc2vv")
@@ -421,7 +423,17 @@ curve = SubResource("Curve2D_yc2vv")
 position = Vector2(24, 16)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_ebls7")
+stream = ExtResource("11_d5hyf")
+volume_db = -24.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_ifjxx")
+volume_db = -12.0
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_w7y7q")
+volume_db = -12.0
+autoplay = true
 
 [connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="EnemyManager/MoveTimer" to="EnemyManager" method="_on_move_timer_timeout"]

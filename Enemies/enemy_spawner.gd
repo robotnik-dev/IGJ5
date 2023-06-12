@@ -35,7 +35,8 @@ func move_all_enemies_down() -> void:
 		Playfield.move_enemy_to(enemy.current_map_pos + Vector2i.DOWN, enemy)
 
 func _on_spawn_timer_timeout() -> void:
-	spawn_enemy_at_ratio(randf())
+	for i in range(randi_range(1, 3)):
+		spawn_enemy_at_ratio(randf())
 
 func _on_move_timer_timeout() -> void:
 	move_all_enemies_down()
