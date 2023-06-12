@@ -8,14 +8,21 @@ class_name Enemy
 var current_map_pos: Vector2i
 
 var alignment: AlignmentComponent.Alignment:
-	get:
-		return alignment_component.alignment
 	set(value):
 		alignment = value
-		alignment_component.alignment = alignment
+		if alignment_component:
+			alignment_component.alignment = alignment
 
+func change_alignment() -> void:
+	match alignment:
+		AlignmentComponent.Alignment.WHITE:
+			alignment = AlignmentComponent.Alignment.BLACK
+		AlignmentComponent.Alignment.BLACK:
+			alignment = AlignmentComponent.Alignment.WHITE
 
 func _ready() -> void:
 	var start_pos = Playfield.local_to_map(global_position)
 	global_position = Playfield.map_to_local(start_pos)
 	current_map_pos = start_pos
+	
+	self.alignment = alignment

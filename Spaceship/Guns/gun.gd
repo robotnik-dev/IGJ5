@@ -2,9 +2,6 @@ extends Node2D
 class_name Gun
 
 @export var bullet_alignment: AlignmentComponent.Alignment = AlignmentComponent.Alignment.WHITE
-@export var bullet_damage: int = 1
-@export var bullet_speed: float = 500.0
-@export var bullet_size: float = 0.2
 
 var bullet_scene = preload("res://Spaceship/Guns/Bullets/bullet.tscn")
 
@@ -15,9 +12,9 @@ func shoot() -> void:
 		global_position,
 		global_rotation,
 		bullet_alignment,
-		bullet_damage,
-		bullet_speed,
-		bullet_size
+		PlayerStats.bullet_damage,
+		PlayerStats.bullet_speed,
+		PlayerStats.bullet_size
 	)
 	
 	add_child(bullet)

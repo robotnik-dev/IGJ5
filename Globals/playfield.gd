@@ -1,5 +1,7 @@
 extends TileMap
 
+signal enemy_alignment_changed
+
 var oob_right: int = 7
 var oob_left: int = 0
 var oob_top: int = -1
@@ -8,12 +10,27 @@ var oob_bottom: int = 7
 var spawn_area_top_left: Vector2i = Vector2i(3, -5)
 var spawn_area_bottom_right: Vector2i = Vector2i(28, -4)
 
+var global_alignment: AlignmentComponent.Alignment = AlignmentComponent.Alignment.WHITE:
+	set(value):
+		global_alignment = value
+		enemy_alignment_changed.emit()
+
 # {entity: Node2D, map_pos: Vector2i}
 var occupied_cells: Dictionary = {}
 
 func _ready() -> void:
 	tile_set = TileSet.new()
 	tile_set.tile_size = Vector2i(32,32)
+
+func change_global_alignment() -> void:
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		enemy.change_alignment()
+	match global_alignment:
+		AlignmentComponent.Alignment.WHITE:
+			global_alignment = AlignmentComponent.Alignment.BLACK
+		AlignmentComponent.Alignment.BLACK:
+			global_alignment = AlignmentComponent.Alignment.WHITE
 
 func move_spaceship_to(map_pos: Vector2i, entity: Node2D) -> void:
 	var next_pos: Vector2i = map_pos
@@ -27,8 +44,9 @@ func move_spaceship_to(map_pos: Vector2i, entity: Node2D) -> void:
 	entity.current_map_pos = local_to_map(entity.global_position)
 
 func move_enemy_to(map_pos: Vector2i, enemy: Node2D) -> void:
-#	if map_pos in occupied_cells.values():
-#		print("occupied")
+	if map_pos in occupied_cells.values():
+		print("occupied")
+#		return
 	
 	occupied_cells.erase(enemy)
 	enemy.global_position = map_to_local(map_pos)

@@ -1,10 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://bah8nbyesoypk"]
+[gd_scene load_steps=17 format=3 uid="uid://bah8nbyesoypk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
 [ext_resource type="Texture2D" uid="uid://cxxumvsyhrxq2" path="res://Assets/background.png" id="2_jtqpq"]
 [ext_resource type="Script" path="res://score_label.gd" id="4_uokt7"]
 [ext_resource type="Script" path="res://bullet_despawn.gd" id="5_bsqyw"]
 [ext_resource type="Script" path="res://Enemies/enemy_spawner.gd" id="5_cpf8v"]
+[ext_resource type="Texture2D" uid="uid://bptvl0y8dk48v" path="res://Assets/same-good.png" id="5_eccvq"]
+[ext_resource type="Script" path="res://Help.gd" id="5_wujlb"]
+[ext_resource type="Texture2D" uid="uid://d3m3pq70u241y" path="res://Assets/bad.png" id="6_m2mrk"]
+[ext_resource type="Script" path="res://Pickup/pickup_spawner.gd" id="6_wdgpe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfkwr"]
 texture = ExtResource("2_jtqpq")
@@ -63,6 +67,12 @@ font_size = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbmon"]
 size = Vector2(256, 20)
 
+[sub_resource type="Curve2D" id="Curve2D_yc2vv"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 24, 16, 0, 0, 0, 0, 240, 16, 0, 0, 0, 0, 240, 208, 0, 0, 0, 0, 24, 208, 0, 0, 0, 0, 24, 40, 0, 0, 0, 0, 216, 40, 0, 0, 0, 0, 216, 184, 0, 0, 0, 0, 48, 184, 0, 0, 0, 0, 56, 64, 0, 0, 0, 0, 192, 64, 0, 0, 0, 0, 192, 160, 0, 0, 0, 0, 80, 152, 0, 0, 0, 0, 88, 88, 0, 0, 0, 0, 160, 96, 0, 0, 0, 0, 160, 128, 0, 0, 0, 0, 128, 128)
+}
+point_count = 16
+
 [node name="Main" type="Node" groups=["main"]]
 script = ExtResource("1_fgtoa")
 
@@ -109,6 +119,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HUD" type="Control" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,8 +169,45 @@ text = "Game Over"
 layout_mode = 2
 text = "New Game"
 
+[node name="Help" type="Control" parent="UI"]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_wujlb")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Help"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Help/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Help/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Movement: WASD"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Help/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Help/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_eccvq")
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Help/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_m2mrk")
+
 [node name="BulletDespawn" type="Area2D" parent="."]
-position = Vector2(128, -104)
+position = Vector2(128, -8)
 collision_layer = 0
 collision_mask = 8
 monitorable = false
@@ -168,8 +216,22 @@ script = ExtResource("5_bsqyw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDespawn"]
 shape = SubResource("RectangleShape2D_pbmon")
 
+[node name="PickupSpawner" type="Node2D" parent="."]
+script = ExtResource("6_wdgpe")
+
+[node name="PickupTimer" type="Timer" parent="PickupSpawner"]
+wait_time = 4.0
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="PickupSpawner"]
+curve = SubResource("Curve2D_yc2vv")
+
+[node name="SpawnLine" type="PathFollow2D" parent="PickupSpawner/Path2D"]
+position = Vector2(24, 16)
+
 [connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="EnemyManager/MoveTimer" to="EnemyManager" method="_on_move_timer_timeout"]
 [connection signal="area_exited" from="EnemyManager/DespawnArea" to="EnemyManager" method="_on_despawn_area_area_exited"]
 [connection signal="pressed" from="UI/Gameover/CenterContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="area_entered" from="BulletDespawn" to="BulletDespawn" method="_on_area_entered"]
+[connection signal="timeout" from="PickupSpawner/PickupTimer" to="PickupSpawner" method="_on_pickup_timer_timeout"]
