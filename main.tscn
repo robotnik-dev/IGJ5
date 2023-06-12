@@ -220,7 +220,7 @@ shape = SubResource("RectangleShape2D_pbmon")
 script = ExtResource("6_wdgpe")
 
 [node name="PickupTimer" type="Timer" parent="PickupSpawner"]
-wait_time = 4.0
+wait_time = 10.0
 autostart = true
 
 [node name="Path2D" type="Path2D" parent="PickupSpawner"]

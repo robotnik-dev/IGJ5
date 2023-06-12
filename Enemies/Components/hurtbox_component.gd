@@ -5,8 +5,12 @@ class_name HurtboxComponent
 @export var alignment_component: AlignmentComponent
 
 func take_damage(damage: Damage) -> void:
-	if is_same_alignment(damage.alignment):
-		health_component.damage(damage.amount)
+	if owner is Enemy:
+		if is_same_alignment(damage.alignment):
+			health_component.damage(damage.amount)
+	else:
+		if not is_same_alignment(damage.alignment):
+			health_component.damage(damage.amount)
 
 func is_same_alignment(alignment) -> bool:
 	var same = false

@@ -44,11 +44,5 @@ func move_spaceship_to(map_pos: Vector2i, entity: Node2D) -> void:
 	entity.current_map_pos = local_to_map(entity.global_position)
 
 func move_enemy_to(map_pos: Vector2i, enemy: Node2D) -> void:
-	if map_pos in occupied_cells.values():
-		print("occupied")
-#		return
-	
-	occupied_cells.erase(enemy)
 	enemy.global_position = map_to_local(map_pos)
 	enemy.current_map_pos = local_to_map(enemy.global_position)
-	occupied_cells[enemy] = map_pos

@@ -2,7 +2,7 @@ extends Node
 
 signal score_changed(score)
 
-var attack_speed = 5.0
+var attack_speed = 2.0
 var move_speed = 0.3
 
 var bullet_damage: int = 1
@@ -17,13 +17,13 @@ var score: int = 0:
 		score = value
 		score_changed.emit(score)
 		
-		if score % 10 == 0:
+		if score % 15 == 0:
 			bullet_size += 0.01
 		
-		if score % 20 == 0:
-			bullet_speed += 10.0
+		if score % 10 == 0:
+			attack_speed += 0.5
 		
-		if score % 40 == 0:
+		if score % 100 == 0:
 			bullet_damage += 1
 		
 		if score % 25 == 0:

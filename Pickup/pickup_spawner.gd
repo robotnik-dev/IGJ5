@@ -25,7 +25,7 @@ func spawn_at_ratio(ratio: float) -> void:
 
 func _on_pickup_timer_timeout() -> void:
 	if not gameover:
-		for child in get_children():
-			if child is BWPickup:
-				return
+#		for child in get_children():
+#			if child is BWPickup:
+#				return
 		spawn_at_ratio(randf())
