@@ -15,15 +15,12 @@ var bullet_speed: float = 100.0
 var bullet_size: float = 0.2
 var enemy_speed: float = 0.1:
 	set(value):
-		enemy_speed = clampf(value, 0.1, 3.0)
+		enemy_speed = clampf(value, 0.1, 0.9)
 
 var score: int = 0:
 	set(value):
 		score = value
 		score_changed.emit(score)
-		
-		if score % 20 == 0:
-			bullet_size += 0.02
 		
 		if score % 15 == 0:
 			self.attack_speed += 0.5

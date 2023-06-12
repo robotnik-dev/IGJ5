@@ -15,11 +15,7 @@ func _ready() -> void:
 	add_child(move_timer)
 	move_timer.start()
 	
-	move_timer.timeout.connect(_on_move_timer)
 	
 	var start_pos = Playfield.local_to_map(owner.global_position)
 	owner.global_position = Playfield.map_to_local(start_pos)
 	current_map_pos = start_pos
-
-func move_down() -> void:
-	Playfield.move_enemy_to(current_map_pos + Vector2i.DOWN, self)
