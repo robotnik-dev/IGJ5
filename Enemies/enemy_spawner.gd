@@ -16,6 +16,9 @@ func new_game() -> void:
 	for child in get_children():
 		if child is Enemy:
 			child.queue_free()
+	
+	spawn_timer.start()
+	move_timer.start()
 
 # ratio between 0 and 1
 func spawn_enemy_at_ratio(ratio: float) -> void:

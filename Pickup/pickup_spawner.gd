@@ -3,17 +3,20 @@ extends Node2D
 var pickUp: PackedScene = preload("res://Pickup/pickup.tscn")
 
 @onready var spawn_line: PathFollow2D = $Path2D/SpawnLine
+@onready var pickup_timer: Timer = $PickupTimer
 
 var gameover: bool = false
 
 func game_over() -> void:
 	gameover = true
+	pickup_timer.stop()
 
 func new_game() -> void:
 	gameover = false
 	for child in get_children():
 		if child is BWPickup:
 			remove_child(child)
+	pickup_timer.start()
 
 # ratio between 0 and 1
 func spawn_at_ratio(ratio: float) -> void:

@@ -3,9 +3,9 @@ extends TileMap
 signal enemy_alignment_changed
 
 var oob_right: int = 7
-var oob_left: int = 0
+var oob_left: int = -1
 var oob_top: int = -1
-var oob_bottom: int = 7
+var oob_bottom: int = 6
 
 var spawn_area_top_left: Vector2i = Vector2i(3, -5)
 var spawn_area_bottom_right: Vector2i = Vector2i(28, -4)

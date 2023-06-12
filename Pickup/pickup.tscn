@@ -1,9 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxkh00vrx7rfy"]
+[gd_scene load_steps=6 format=3 uid="uid://bxkh00vrx7rfy"]
 
 [ext_resource type="Script" path="res://Pickup/pickup.gd" id="1_cbceb"]
 [ext_resource type="Texture2D" uid="uid://bpt57dyf5coqr" path="res://Assets/pickup.png" id="1_sm3u2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohjdv"]
+
+[sub_resource type="Animation" id="Animation_yd6ei"]
+resource_name = "explode"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_724sl"]
+_data = {
+"explode": SubResource("Animation_yd6ei")
+}
 
 [node name="Pickup" type="Area2D"]
 collision_layer = 0
@@ -16,5 +24,10 @@ texture = ExtResource("1_sm3u2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohjdv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_724sl")
+}
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

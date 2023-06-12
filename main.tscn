@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bah8nbyesoypk"]
+[gd_scene load_steps=28 format=3 uid="uid://bah8nbyesoypk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_fgtoa"]
 [ext_resource type="Texture2D" uid="uid://cxxumvsyhrxq2" path="res://Assets/background.png" id="2_jtqpq"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://Help.gd" id="5_wujlb"]
 [ext_resource type="Texture2D" uid="uid://d3m3pq70u241y" path="res://Assets/bad.png" id="6_m2mrk"]
 [ext_resource type="Script" path="res://Pickup/pickup_spawner.gd" id="6_wdgpe"]
+[ext_resource type="Texture2D" uid="uid://bfjmkkf4nem6d" path="res://Assets/change-color.png" id="8_ignrr"]
+[ext_resource type="AudioStream" uid="uid://djwd3osi8tcw" path="res://Assets/Sounds/Bleep_01.wav" id="11_ebls7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfkwr"]
 texture = ExtResource("2_jtqpq")
@@ -64,6 +66,76 @@ size = Vector2(256, 20)
 [sub_resource type="LabelSettings" id="LabelSettings_oyl2r"]
 font_size = 8
 
+[sub_resource type="Animation" id="Animation_nwqql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_fima5"]
+resource_name = "switch_color"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 100.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(10),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_color"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u11ah"]
+_data = {
+"RESET": SubResource("Animation_nwqql"),
+"switch_color": SubResource("Animation_fima5")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xr20o"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mqc5"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hnvmu"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_5w4he"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_rbstd"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_1185s"]
+font_size = 10
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbmon"]
 size = Vector2(256, 20)
 
@@ -96,10 +168,8 @@ rotates = false
 loop = false
 
 [node name="SpawnTimer" type="Timer" parent="EnemyManager"]
-autostart = true
 
 [node name="MoveTimer" type="Timer" parent="EnemyManager"]
-autostart = true
 
 [node name="DespawnArea" type="Area2D" parent="EnemyManager"]
 position = Vector2(128, 256)
@@ -141,6 +211,30 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_uokt7")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HUD/HBoxContainer"]
+libraries = {
+"": SubResource("AnimationLibrary_u11ah")
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/HUD/HBoxContainer"]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_xr20o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mqc5")
+show_percentage = false
+
 [node name="Gameover" type="Control" parent="UI"]
 visible = false
 layout_mode = 1
@@ -180,7 +274,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_wujlb")
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/Help"]
+[node name="ColorRect" type="ColorRect" parent="UI/Help"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0429688
+anchor_top = 0.25
+anchor_right = 0.957031
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.411765, 0.411765, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CenterContainer" type="MarginContainer" parent="UI/Help"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,13 +296,12 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Help/CenterContainer"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Help/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Movement: WASD"
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Help/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 21
 
 [node name="TextureRect" type="TextureRect" parent="UI/Help/CenterContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -205,6 +310,93 @@ texture = ExtResource("5_eccvq")
 [node name="TextureRect2" type="TextureRect" parent="UI/Help/CenterContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("6_m2mrk")
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Help/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_ignrr")
+
+[node name="TitleScreen" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/TitleScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/TitleScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Space Intruders"
+label_settings = SubResource("LabelSettings_hnvmu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Movement"
+
+[node name="Label2" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "WASD"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Help"
+
+[node name="Label2" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "ESC"
+
+[node name="Info" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Survive as long as possible"
+label_settings = SubResource("LabelSettings_5w4he")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Info2" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "The opposite color will damage you"
+label_settings = SubResource("LabelSettings_rbstd")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Info3" type="Label" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Colors will be changed during gameplay"
+label_settings = SubResource("LabelSettings_1185s")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Start" type="Button" parent="UI/TitleScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start "
 
 [node name="BulletDespawn" type="Area2D" parent="."]
 position = Vector2(128, -8)
@@ -221,7 +413,6 @@ script = ExtResource("6_wdgpe")
 
 [node name="PickupTimer" type="Timer" parent="PickupSpawner"]
 wait_time = 10.0
-autostart = true
 
 [node name="Path2D" type="Path2D" parent="PickupSpawner"]
 curve = SubResource("Curve2D_yc2vv")
@@ -229,9 +420,13 @@ curve = SubResource("Curve2D_yc2vv")
 [node name="SpawnLine" type="PathFollow2D" parent="PickupSpawner/Path2D"]
 position = Vector2(24, 16)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ebls7")
+
 [connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="EnemyManager/MoveTimer" to="EnemyManager" method="_on_move_timer_timeout"]
 [connection signal="area_exited" from="EnemyManager/DespawnArea" to="EnemyManager" method="_on_despawn_area_area_exited"]
 [connection signal="pressed" from="UI/Gameover/CenterContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="UI/TitleScreen/MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="area_entered" from="BulletDespawn" to="BulletDespawn" method="_on_area_entered"]
 [connection signal="timeout" from="PickupSpawner/PickupTimer" to="PickupSpawner" method="_on_pickup_timer_timeout"]

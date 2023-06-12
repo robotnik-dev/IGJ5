@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://77reewsp03c"]
+[gd_scene load_steps=13 format=3 uid="uid://77reewsp03c"]
 
 [ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_uo0qm"]
 [ext_resource type="PackedScene" uid="uid://1e4ven6ltjsm" path="res://Enemies/Components/sprite_component.tscn" id="2_vv16e"]
@@ -13,6 +13,14 @@
 size = Vector2(28, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6odl"]
+
+[sub_resource type="Animation" id="Animation_l8ga6"]
+resource_name = "explode"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wlfqc"]
+_data = {
+"explode": SubResource("Animation_l8ga6")
+}
 
 [node name="Enemy" type="Node2D" groups=["Enemy"]]
 script = ExtResource("1_uo0qm")
@@ -49,3 +57,8 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(14, 16)
 shape = SubResource("RectangleShape2D_o6odl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wlfqc")
+}
